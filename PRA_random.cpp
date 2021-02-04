@@ -1,5 +1,3 @@
-/*PAGE REPLACEMENT ALGORITHMS*/   
-           
 #include<iostream>
 #include<conio.h>
 #include<windows.h>
@@ -8,19 +6,18 @@
 
 using namespace std;
 
-//declaring functions
-void show(char[]);       //to show the name of the project 
-void design();           //to create design of the first page
-void gotoxy(int,int);    //to place cursor at desired position
-void lru();              //least recently used 
-void fifo();             //First in first out
-void opt();              //Optimal page replacement
-void compare();          //to compare the 3 page replacement algorithms
-void new_algo();         //a new algo combining lru and optimal
+void show(char[]);      
+void design();          
+void gotoxy(int,int);   
+void lru();              
+void fifo();            
+void opt();              
+void compare();          
+void new_algo();         //an updated algorithm combining lru and FIFO
 
 
-int s=2;                                                       //to place the cursor at desired position
-char ch[50];                                                   //a[]-> reference string  
+int s=2;                                                       
+char ch[50];                                                  
 int i,k=0,c,n,f,a[5000];
     
 int main()
@@ -30,14 +27,14 @@ int main()
     design();
     system("cls");
     
- diff:   cout<<"enter the length of the reference string: ";      
+ diff:   cout<<"enter the length of the reference string (Limit 5000): ";      
    cin>>n;
    cout<<"the reference string is: ";
    for(i=0;i<n;i++)
       {
-	  a[i]=rand()%10;
+	  a[i]=rand()%100;
 	  cout<<a[i];}   
-   cout<<"\nenter the frame size: ";
+   cout<<"\nenter the frame size (Limit 20): ";
       cin>>f; 
     
 same: cout<<"Choose the page replacement algorithm you want to use\n";
@@ -46,7 +43,7 @@ same: cout<<"Choose the page replacement algorithm you want to use\n";
     system("cls");
     cout<<"Reference string : ";
     for(i=0;i<n;i++)
-      cout<<a[i];                                                     //to display the reference string
+      cout<<a[i];                                                     
       cout<<"\n";
     switch(z)
     {
@@ -79,7 +76,7 @@ same: cout<<"Choose the page replacement algorithm you want to use\n";
                   break;
 	}
   con:  cout<<"\n\nPress any key to exit";
-    getch();
+    _getch();
     
     system("cls");
     gotoxy(17,10);
@@ -88,7 +85,7 @@ same: cout<<"Choose the page replacement algorithm you want to use\n";
     {
       gotoxy(35,13);
       cout<<i;
-      Sleep(1000);
+      Sleep(500);
     }
     
     return 0;
@@ -98,15 +95,16 @@ void lru()
 {
    int i,j,k,l,p=15,c=0;
    int b[20],q,min=50;
+   string fault = "";
      
    for(j=0;j<f;j++)
-      b[j]=-1;                              //putting -1 into all frame elements
-      //cout<<"\n\nstring\t\tFrames";
+      b[j]=-1;                             
+      //cout<<"\n\nstring\t\tFault\t\tFrames";
    for(i=0;i<n;i++)
    {
       for(j=0;j<f;j++)
       {
-         if(a[i]==b[j])                 //check if element from reference string is already present in the frame
+         if(a[i]==b[j])                 
            break;
          else 
            continue;               
@@ -117,7 +115,7 @@ void lru()
          for(k=0;k<f;k++)
            if(b[k]==-1)
            {
-              b[k]=a[i];                  //replace the value in the frame with the value in the reference string
+              b[k]=a[i];                  
          
               break;         
            }
@@ -144,13 +142,15 @@ void lru()
              }
            }       
            b[p]=a[i];  
-           c++; 
+           c++;
+           fault = "Fault";
              
-         }          
-         //cout<<"\n\n";
-         //cout<<a[i]<<"\t\t";
-         //for(k=0;k<f;k++)
-           //cout<<b[k]<<"   ";
+      }          
+        //cout<<"\n\n";
+        // cout<<a[i]<<"\t\t"<<fault<<"\t\t";
+        // fault = "";
+        // for(k=0;k<f;k++)
+        //   cout<<b[k]<<"   ";
           
    }  
     cout<<"\n\npage fault by LRU is: "<<c<<"\n\n";   
@@ -161,12 +161,12 @@ void fifo()
 int i,j,k,l=0,c=0;
 int b[20];
 	          
-   for(j=0;j<f;j++)       //insert the value -1 into all frame elements in the beginning
+   for(j=0;j<f;j++)       
       b[j]=-1; 
 	 // cout<<"\n\nstring\t\tFrames";                
    for(i=0;i<n;i++)
    {
-      for(j=0;j<f;j++)    //check whether the reference string value already exists in the frame
+      for(j=0;j<f;j++)   
       {
          if(b[j]==a[i])     
            break;
@@ -186,7 +186,7 @@ int b[20];
          {
             while(1)
             {
-               b[l]=a[i];     //assign b[length]=ref. string.
+               b[l]=a[i];    
                c++;
                l++;
                break;      
@@ -197,7 +197,7 @@ int b[20];
       }
     //cout<<"\n\n";
     //cout<<a[i]<<"\t\t";
-      //for(k=0;k<f;k++)        //To print all frame values.
+      //for(k=0;k<f;k++)        
         //cout<<b[k]<<"   ";
    }
    cout<<"\n\npage fault by fifo is "<<c<<"\n";
@@ -209,7 +209,7 @@ void opt()
    int b[20],q,max;
    
    for(j=0;j<f;j++)
-   b[j]=-1;                 //Putting -1 in al frame elements in the beginning
+   b[j]=-1;                
    //cout<<"\n\nstring\t\tFrames";   
    for(i=0;i<n;i++)
    {
@@ -221,7 +221,7 @@ void opt()
                    
                    for(j=0;j<f;j++)
                    {
-                                   if(b[j]==-1)                //Check if the reference string element already exists in the frame
+                                   if(b[j]==-1)               
                                     {
                                                        b[j]=a[i];
                                                        c++;
@@ -263,7 +263,7 @@ void opt()
   here:  cout<<"";
     //cout<<"\n\n";
     //cout<<a[i]<<"\t\t";
-      //for(k=0;k<f;k++)        //To print all frame values.
+      //for(k=0;k<f;k++)        
         //cout<<b[k]<<"   ";
           
    }  
@@ -278,128 +278,112 @@ void compare()
 	new_algo();
 }
 
-
 void new_algo()
 {
-   int i,j,k,l,p,c1=0,r;
-   int b[20],q,min=50;
-    int c2=0,s;
-   int max;
-   
-   
-  
-   for(j=0;j<f;j++)
-      b[j]=-1;  
-      
-   for(i=0;i<n;i++)
-   {
-   	r=i%2;
-   	if(r==0)
-   	{
-      for(j=0;j<f;j++)
-      {
-         if(a[i]==b[j])
-           break;
-         else 
-           continue;               
-      }
-      
-      if(j==f)
-      {
-         for(k=0;k<f;k++)
-           if(b[k]==-1)
-           {
-              b[k]=a[i];
-         
-              break;         
-           }
-           
-          if(k==f)
-          {
-             min=50;
-             for(j=0;j<f;j++)
-             {
-               l=i-1;
-               while(l>=0)
-               { 
-                 if(a[l]==b[j])
-                 {
-                    if(l<min)
-                    {  
-                       min=l;
-                       p=j;
-                    }     
+    int i, j, k, l, p = 15, c1 = 0, r, curr=0;
+    int b[20], q, min = 50;
+    int c2 = 0, s;
+    int max;
+
+
+
+    for (j = 0; j < f; j++)
+        b[j] = -1;
+
+    for (i = 0; i < n; i++)
+    {
+        r = i % 2;
+        if (r == 0)
+        {
+            for (j = 0; j < f; j++)
+            {
+                if (a[i] == b[j])
                     break;
-                 }
-                 l--;
-               }
-             }
-           }       
-           b[p]=a[i];  
-           c1++; 
-             
-         }          
-         cout<<"";
-         //for(k=0;k<f;k++)
-           //cout<<b[k];
-          
-   }  
-   else if(r!=0){
-		           
-                    for(k=0;k<f;k++)
-                           if(b[k]==a[i])
-                           goto here;
-                                    
-                   
-                   for(j=0;j<f;j++)
-                   {
-                                   if(b[j]==-1)
-                                    {
-                                                       b[j]=a[i];
-                                                       c2++;
-                                                       goto here;
-                                    }
-                                               
-                   }
-          
-                   if(j==f)
-                   {
-                                    l=i+1,max=0;
-                           for(j=0;j<f;j++)
-                           {
-                           
-                                             for(s=l;s<n;s++)
-                                             { 
-                                               if(a[s]==b[j])
-                                               {
-                                                             if(s>max)
-                                                             {  
-                                                                max=s;
-                                                                p=j;
-                                                             }     
-                                                             break;
-                                               }
-                                                
-                                             }
-                                             if(s==n)
-                                             {
-                                               max=s;
-                                               p=j;
-                                             }
-                                             
-                           }
-                   }       
-                   b[p]=a[i];  
-                    c2++; 
-                     
-  here:   cout<<"";
-     //for(k=0;k<f;k++)
-     //cout<<b[k];
-          
-   }}
-   
-   cout<<"\n\nthe page fault by new algorithm is : "<<c1+c2;
+                else
+                    continue;
+            }
+
+            if (j == f)
+            {
+                for (k = 0; k < f; k++)
+                    if (b[k] == -1)
+                    {
+                        b[k] = a[i];
+
+                        break;
+                    }
+
+                if (k == f)
+                {
+                    min = 50;
+                    for (j = 0; j < f; j++)
+                    {
+                        l = i - 1;
+                        while (l >= 0)
+                        {
+                            if (a[l] == b[j])
+                            {
+                                if (l < min)
+                                {
+                                    min = l;
+                                    p = j;
+                                }
+                                break;
+                            }
+                            l--;
+                        }
+                    }
+                }
+                b[p] = a[i];
+                c1++;
+
+            }
+            cout << "";
+            //for(k=0;k<f;k++)
+              //cout<<b[k];
+
+        }
+        else if (r != 0) {
+
+            for (j = 0; j < f; j++)   
+            {
+                if (b[j] == a[i])
+                    break;
+                else
+                    continue;
+            }
+            if (j == f)
+            {
+                for (k = 0; k < f; k++)
+                    if (b[k] == -1)
+                    {
+                        b[k] = a[i];
+                        c2++;
+                        break;
+                    }
+                if (k == f)
+                {
+                    while (1)
+                    {
+                        b[curr] = a[i];     
+                        c2++;
+                        curr++;
+                        break;
+                    }
+                    if (curr == f)
+                        curr = 0;
+                }
+            }
+        here:   cout << "";
+            //for(k=0;k<f;k++)
+            //cout<<b[k];
+
+        }
+    }
+
+    cout << "\n\nthe page fault by new algorithm is : " << c1 + c2;
 }
+
 
 void gotoxy(int x, int y)
 {
@@ -478,7 +462,7 @@ void design()
     
     
     gotoxy(28,6);
-    strcpy(ch,"PAGE REPLACEMENT ALGORITHM");
+    strcpy_s(ch,"PAGE REPLACEMENT ALGORITHM");
     show(ch);
     
        
@@ -492,7 +476,7 @@ void design()
     for(i=0;i<59;i++)
     {
       cout<<"!";
-      Sleep(50);
+      Sleep(15);
     }
     
     gotoxy(35,12);
@@ -503,7 +487,5 @@ void design()
     
     gotoxy(27,13);
     cout<<"press any key to continue....";
-    getch();
+    _getch();
 }
-
-                                       //End of Page Replacement Algorithm code
